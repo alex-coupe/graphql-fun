@@ -6,7 +6,7 @@ const {GraphQLObjectType, GraphQLString, GraphQLSchema} = graphql;
 
 const films = [
     {name: 'A New Hope', genre: 'Sci-Fi', id:'1' },
-    {name: 'The Two Towers', genre: 'Fantasy', id: 2},
+    {name: 'The Two Towers', genre: 'Fantasy', id: '2'},
     {name: 'Avengers', genre: 'Superhero', id:'3'}
 ];
 
