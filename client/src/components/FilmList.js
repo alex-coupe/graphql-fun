@@ -1,16 +1,6 @@
 import React from 'react';
-import {gql} from 'apollo-boost';
 import {graphql} from 'react-apollo';
-
-const getFilmsQuery = gql`
-{
-    films{
-        name
-        genre
-        id
-    }
-}
-`
+import {getFilmsQuery} from '../queries/queries';
 
 function displayFilms(props) {
     const data = props.data;

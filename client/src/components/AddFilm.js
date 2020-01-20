@@ -1,15 +1,7 @@
 import React from 'react';
-import {gql} from 'apollo-boost';
+import {getDirectorsQuery} from '../queries/queries';
 import {graphql} from 'react-apollo';
 
-const getDirectorsQuery = gql`
-{
-    directors{
-        name
-        id
-    }
-}
-`
 
 function displayDirectors(props){
     const data = props.data;
