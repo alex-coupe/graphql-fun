@@ -15,7 +15,7 @@ const FilmType = new GraphQLObjectType({
         director: {
             type: DirectorType,
             resolve(parent, args){
-                
+                return Director.findById(parent.directorId);
             }
         }
     })
@@ -30,7 +30,9 @@ const DirectorType = new GraphQLObjectType({
         films: {
             type: new GraphQLList(FilmType),
             resolve(parent, args){
-                
+                return Film.find({
+                    directorId: parent.id
+                });
             }
         }
     })
@@ -43,26 +45,26 @@ const RootQuery = new GraphQLObjectType({
             type: FilmType,
             args: {id: {type:GraphQLID}},
             resolve(parent,args){
-               
+               return Film.findById(args.id);
             }
         },
         director: {
             type: DirectorType,
             args: {id: {type:GraphQLID}},
             resolve(parent, args){
-               
+               return Director.findById(args.id)
             }
         },
         films: {
             type: new GraphQLList(FilmType),
             resolve(parent, args){
-                
+                return Film.find({});
             }
         },
         directors: {
             type: new GraphQLList(DirectorType),
             resolve(parent, args){
-                
+                return Director.find({});
             }
         }
     }
