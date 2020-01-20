@@ -3,7 +3,7 @@ const _ = require('lodash');
 const Film = require('../models/Film');
 const Director = require('../models/Director');
 
-const {GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLID, GraphQLInt, GraphQLList} = graphql;
+const {GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLID, GraphQLInt, GraphQLList, GraphQLNonNull} = graphql;
 
 
 const FilmType = new GraphQLObjectType({
@@ -76,8 +76,8 @@ const Mutation = new GraphQLObjectType({
         addDirector: {
             type:DirectorType,
             args:{
-                name: {type:GraphQLString},
-                age: {type:GraphQLInt}
+                name: {type:new GraphQLNonNull(GraphQLString)},
+                age: {type:new GraphQLNonNULL(GraphQLInt)}
             },
             resolve(parents, args){
                 let director = new Director({
@@ -90,9 +90,9 @@ const Mutation = new GraphQLObjectType({
         addFilm: {
             type:FilmType,
             args:{
-                name: {type:GraphQLString},
-                genre: {type:GraphQLString},
-                directorId: {type: GraphQLID }
+                name: {type: new GraphQLNonNull(GraphQLString)},
+                genre: {type: new GraphQLNonNull(GraphQLString)},
+                directorId: {type: new GraphQLNonNull(GraphQLID)}
             },
             resolve(parents, args){
                 let film = new Film({
