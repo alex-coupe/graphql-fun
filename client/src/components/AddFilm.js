@@ -1,10 +1,11 @@
-import React from 'react';
-import {getDirectorsQuery} from '../queries/queries';
+import React, { useState } from 'react';
+import {getDirectorsQuery, addFilmMutation} from '../queries/queries';
 import {graphql} from 'react-apollo';
+import {flowRight as compose} from 'lodash';
 
 
 function displayDirectors(props){
-    const data = props.data;
+    const data = props.getDirectorsQuery;
     if (data.loading)
         return(<option disabled>Loading Directors</option>);
     
@@ -13,23 +14,39 @@ function displayDirectors(props){
     });
 }
 
+function submitForm(e, props, data){
+    e.preventDefault();
+    props.addFilmMutation({
+        variables: {
+            name: data.filmName,
+            genre: data.genre,
+            directorId: data.directorId
+        }
+    });
+}
+
 function AddFilm(props){
+
+    const [filmName, setFilmName] = useState("");
+    const [genre, setGenre] = useState("");
+    const [directorId, setDirectorId] = useState("");
+
     return(
-        <form id="add-film">
+        <form id="add-film" onSubmit={(e) => submitForm(e, props, {filmName,genre,directorId})}>
 
             <div className="field">
                 <label>Film Name:</label>
-                <input type="text" />
+                <input type="text" onChange={(e) => setFilmName(e.target.value)} />
             </div>
 
             <div className="field">
                 <label>Genre:</label>
-                <input type="text" />
+                <input type="text" onChange={(e) => setGenre(e.target.value)}/>
             </div>
 
             <div className="field">
                 <label>Author:</label>
-                <select>
+                <select onChange={(e) => setDirectorId(e.target.value)}>
                     <option>Select Director...</option>
                     {displayDirectors(props)}
                 </select>
@@ -40,4 +57,7 @@ function AddFilm(props){
     );
 }
 
-export default graphql(getDirectorsQuery)(AddFilm);
+export default compose(
+    graphql(getDirectorsQuery, {name: "getDirectorsQuery"}),
+    graphql(addFilmMutation, {name: "addFilmMutation"})
+    )(AddFilm);
