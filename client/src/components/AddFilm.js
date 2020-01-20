@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {getDirectorsQuery, addFilmMutation} from '../queries/queries';
+import {getDirectorsQuery, addFilmMutation, getFilmsQuery} from '../queries/queries';
 import {graphql} from 'react-apollo';
 import {flowRight as compose} from 'lodash';
 
@@ -21,7 +21,8 @@ function submitForm(e, props, data){
             name: data.filmName,
             genre: data.genre,
             directorId: data.directorId
-        }
+        },
+        refetchQueries: [{query: getFilmsQuery}]
     });
 }
 
