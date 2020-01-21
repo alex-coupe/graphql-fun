@@ -6,7 +6,7 @@ function FilmDetails(props){
     const {film} = props.data;
     if (film){
         return (
-            <div>
+            <div id="film-details">
                 <h2>{film.name}</h2>
                 <p>{film.genre}</p>
                 <p>{film.director.name}</p>
@@ -20,7 +20,7 @@ function FilmDetails(props){
         )
     }
     else {
-        return <div>
+        return <div id="film-details">
             No film selected....
         </div>
     }
