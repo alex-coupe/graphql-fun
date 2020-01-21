@@ -26,9 +26,27 @@ mutation($name: String!, $genre: String!, $directorId: ID!){
         id
     }
 }
+`
 
+const getFilmQuery = gql`
+query($id: ID){
+    film(id:$id){
+        id
+        name
+        genre
+        director{
+            name
+            id
+            age
+            films{
+                name
+                id
+            }
+        }
+    }
+}
 `
 
 export{
-    getDirectorsQuery,getFilmsQuery, addFilmMutation
+    getDirectorsQuery,getFilmsQuery, addFilmMutation, getFilmQuery
 }
